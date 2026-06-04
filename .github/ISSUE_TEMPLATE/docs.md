@@ -1,32 +1,59 @@
 ---
 name: Docs
-about: 문서 추가 및 수정
+about: 기획서, 요구사항, API, DB, Agent 명세 등 문서 수정
 title: "[Docs] "
 labels: docs
 assignees: ""
 ---
 
-## 📖 Document Changes
-어떤 문서를 수정하거나 추가하는지 설명합니다.
-- (예: README.md 가독성 개선)
-- (예: 프로젝트 아키텍처 다이어그램 추가)
+## Project Tracking
+
+- Milestone:
+- Sprint / Iteration:
+- Priority: High / Medium / Low
+- Layer: 문서
+- Related:
 
 ---
 
-## 🎯 Purpose of Update
-이번 문서 수정이 왜 필요한지 설명합니다.
-- (예: 기존 설치 가이드의 명령어가 최신 버전과 맞지 않음)
-- (예: 팀원들의 원활한 협업을 위한 컨벤션 문서화)
+## 수정 대상 문서
+
+- [ ] `docs/00_project_plan`
+- [ ] `docs/01_requirements`
+- [ ] `docs/02_service_flow`
+- [ ] `docs/03_technical_spec`
+- [ ] `docs/04_data_collect_plan`
+- [ ] `docs/05_api_spec`
+- [ ] `docs/06_database_design`
+- [ ] `docs/07_agent_spec`
+- [ ] 기타:
 
 ---
 
-## ✍️ Key Modifications
-주요 변경 사항이나 작업 내용을 요약합니다.
-- [ ] 오타 및 비문 수정
-- [ ] 새로운 가이드 섹션 추가
-- [ ] 깨진 링크 및 이미지 경로 복구
+## 수정 목적
+
+이번 문서 수정이 필요한 이유를 작성합니다.
+
+-
 
 ---
 
-## 📎 References
-참고한 문서, 링크 또는 관련 스크린샷을 첨부합니다.
+## 주요 변경 내용
+
+- [ ]
+- [ ]
+
+---
+
+## 함께 확인할 산출물
+
+- [ ] 원본 Markdown 문서를 확인했다
+- [ ] GitHub Pages / HTML 산출물을 확인했다
+- [ ] 관련 상위/하위 명세와 내용이 충돌하지 않는지 확인했다
+- [ ] 링크, 이미지, 표, 목차가 깨지지 않는지 확인했다
+
+---
+
+## 참고 자료
+
+-

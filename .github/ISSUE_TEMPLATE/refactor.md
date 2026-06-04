@@ -1,27 +1,59 @@
 ---
 name: Refactor
-about: 코드 구조 개선 또는 형식 변경
+about: 코드, 문서 구조, 명세 구조, Agent 흐름 정리
 title: "[Refactor] "
 labels: refactor
 assignees: ""
 ---
 
-## 🔧 Refactor Description
+## Project Tracking
 
-코드 구조 개선 내용
-
----
-
-## 📂 Target
-
-- module
-- function
-- architecture
+- Milestone:
+- Sprint / Iteration:
+- Priority: High / Medium / Low
+- Layer: FE / BE / LLM / DB / Infra / 문서 / 테스트
+- Related:
 
 ---
 
-## ✔️ Expected Benefit
+## 정리 대상
 
-- 코드 가독성 개선
-- 들여쓰기 통일
-- 유지보수성 향상
+- [ ] Code
+- [ ] Docs
+- [ ] API Spec
+- [ ] DB Schema
+- [ ] Agent Flow
+- [ ] Data Pipeline
+- [ ] 기타:
+
+---
+
+## 현재 문제
+
+정리가 필요한 이유를 작성합니다.
+
+-
+
+---
+
+## 변경 방향
+
+-
+
+---
+
+## 기대 효과
+
+-
+
+---
+
+## 영향 범위
+
+-
+
+---
+
+## 검증 방법
+
+-
