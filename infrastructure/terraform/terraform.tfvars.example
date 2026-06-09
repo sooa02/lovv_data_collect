@@ -1,0 +1,5 @@
+aws_profile  = "skn26_final"
+aws_region   = "us-east-1"
+env          = "dev"
+bucket_base_name = "lovv-data-pipeline"
+dynamodb_table_name = "TourKoreaData"
