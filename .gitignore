@@ -229,3 +229,5 @@ __marimo__/
 !/data/
 !/data/**/
 !/data/**/.gitkeep
+/data/KR/detail_cache/**
+/data/KR/details/**
