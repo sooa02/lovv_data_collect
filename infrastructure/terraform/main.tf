@@ -226,7 +226,7 @@ resource "aws_cloudwatch_log_group" "lambda_loader" {
 data "archive_file" "kr_pipeline_lambda" {
   # 현재 패키지는 `src/` 전체를 ZIP으로 묶어 Lambda에서 공통 handler를 로드합니다.
   type        = "zip"
-  source_dir  = "${path.module}/../src"
+  source_dir  = "${path.module}/../../src"
   output_path = "${path.module}/kr_pipeline_lambda.zip"
 }
 
