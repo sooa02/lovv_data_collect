@@ -46,7 +46,7 @@ class LoadTest(unittest.TestCase):
             ],
         }
         fake_client = FakeDynamoClient()
-        result = load.load_processed_payload(payload, "TourKoreaData", fake_client)
+        result = load.load_processed_payload(payload, "TourKoreaDomainData", fake_client)
 
         self.assertEqual(3, result.passed)
         self.assertEqual(0, result.failed)

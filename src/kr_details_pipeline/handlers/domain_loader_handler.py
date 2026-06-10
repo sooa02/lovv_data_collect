@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import os
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import Any
 
 from kr_details_pipeline import load, transform
@@ -55,7 +55,7 @@ def handler(event: dict[str, Any], context: Any) -> dict[str, Any]:  # noqa: ARG
         "raw_key": raw_key,
         "loaded": loaded,
         "load_failed": failed,
-        "executed_at": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "executed_at": datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
     }
 
     if write_processed:
