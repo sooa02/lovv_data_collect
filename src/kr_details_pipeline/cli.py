@@ -8,6 +8,7 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
+from kr_details_pipeline.domain_preprocess import preprocess_city_file
 from kr_details_pipeline.raw_ingest import RawIngestConfig, ingest_raw_details
 from kr_details_pipeline.transform import transform_raw_city, build_city_record
 
@@ -34,6 +35,11 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     load_cmd.add_argument("--processed-dir", type=Path, required=True, help="Directory containing processed city payload files.")
     load_cmd.add_argument("--table-name", default="TourKoreaData")
     load_cmd.add_argument("--output", type=Path, default=None, help="Optional path to write load candidates as JSONL.")
+
+    domain_preprocess = subparsers.add_parser("domain-preprocess", help="Split one KR raw detail JSON into restaurant, attraction, and festival items.")
+    domain_preprocess.add_argument("--raw-file", type=Path, required=True, help="Raw city detail JSON file.")
+    domain_preprocess.add_argument("--output-dir", type=Path, required=True, help="Output directory for domain-specific preprocessing artifacts.")
+    domain_preprocess.add_argument("--table-name", default="TourKoreaDomainData")
     return parser.parse_args(argv)
 
 
@@ -45,6 +51,8 @@ def main(argv: list[str] | None = None) -> int:
         return _transform(args)
     if args.command == "load":
         return _load(args)
+    if args.command == "domain-preprocess":
+        return _domain_preprocess(args)
     raise ValueError(f"Unsupported command: {args.command}")
 
 
@@ -149,6 +157,21 @@ def _load(args: argparse.Namespace) -> int:
 
     print(f"[INFO] load plan completed passed={passed} failed={failed}")
     return 0 if failed == 0 else 1
+
+
+def _domain_preprocess(args: argparse.Namespace) -> int:
+    summary = preprocess_city_file(args.raw_file, args.output_dir, table_name=args.table_name)
+    print(
+        "[INFO] domain-preprocess completed "
+        f"city={summary['city_name_en']} "
+        f"restaurants={summary['restaurants']} "
+        f"attractions={summary['attractions']} "
+        f"festivals={summary['festivals']} "
+        f"review={summary['review']} "
+        f"failed={summary['failed']} "
+        f"load_items={summary['load_items']}"
+    )
+    return 1 if summary["failed"] else 0
 
 
 if __name__ == "__main__":
