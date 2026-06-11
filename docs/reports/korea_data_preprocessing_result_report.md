@@ -164,13 +164,17 @@ processed/KR/domain summary 기록
 
 | 검증 항목 | 결과 |
 | --- | --- |
-| Python 단위 테스트 | `13 passed` |
+| Python 단위 테스트 | `18 passed` |
 | DynamoDB 전체 삭제 | 완료 |
 | S3 Raw 40개 파일 목록 확인 | 완료 |
 | Lambda 전체 실행 | 40개 성공 |
 | Lambda load 실패 | 0건 |
 | 최종 DynamoDB count 확인 | 4,334건 |
 | 쿼리 사용 가이드 갱신 | 완료 |
+| 전처리 전용 테스트 | 완료 |
+| Lambda 부분 실패 경로 테스트 | 완료 |
+| Terraform 최종 검증 | `terraform plan` 결과 `No changes` |
+| 도메인 테이블 GSI 상태 | `GSI1`, `GSI2`, `GSI3` 모두 `ACTIVE` |
 
 실제 운영 검증은 수동 Lambda 실행 기준으로 진행했다. 자동 S3 event trigger는 현재 개발 단계에서는 적용하지 않았다.
 
@@ -199,18 +203,29 @@ aws dynamodb query \
 
 상세 조회 패턴은 `docs/reports/query_usage_guide.md`에 정리했다.
 
-## 11. 남은 이슈와 리스크
+## 11. 대응 완료 항목과 남은 이슈
+
+아래 항목은 이전 보고서에서 남은 이슈로 분류됐던 내용 중 이번 작업에서 대응한 결과이다.
+
+| 항목 | 대응 결과 | 상태 |
+| --- | --- | --- |
+| `TourKoreaData` 제거 | Terraform에서 legacy table resource와 output을 제거하고 AWS에서도 삭제 확인 | 완료 |
+| 도메인 테이블 GSI 정리 | `TourKoreaDomainData`의 GSI를 도시, 도/광역, entity type 조회 기준으로 재구성 | 완료 |
+| 전처리 전용 테스트 | 도메인 분류, projection allowlist, 누락 필드 failed 분리, output writer 테스트 추가 | 완료 |
+| 실패 경로 검증 | `kr-domain-loader`의 DynamoDB 부분 실패 시 `statusCode = 207`과 failures payload 반환 테스트 추가 | 완료 |
+| Lambda 패키징 정리 | Lambda archive에서 `tests/`, `__pycache__/` 제외 | 완료 |
+| 운영 문서 정리 | README, Terraform README, 쿼리 가이드, 작업 보고서를 `TourKoreaDomainData` 기준으로 갱신 | 완료 |
+
+현재 기준으로 남은 이슈는 다음과 같다.
 
 | 항목 | 내용 | 대응 방향 |
 | --- | --- | --- |
-| 과거 문서 정리 | 기존 `TourKoreaData`는 제거됐으나 일부 과거 Spec에 명칭이 남아 있을 수 있음 | 후속 문서 정리 시 `TourKoreaDomainData` 기준으로 동기화 |
-| 전처리 전용 테스트 | domain-preprocess 전용 테스트가 부족 | projection, 분류, 실패 케이스 테스트 추가 |
+| 과거 Spec 정리 | 일부 과거 Spec 문서에는 초기 설계 기준의 `TourKoreaData` 명칭이 남아 있을 수 있음 | 다음 Spec 정리 작업에서 `TourKoreaDomainData` 기준으로 동기화 |
 | manifest 정리 | S3 Raw ingest manifest가 실제 적재 이력을 완전히 대표하지 않음 | Raw ingest와 domain load 이력 관리 방식 확정 |
-| 실패 경로 검증 | Lambda 부분 실패 응답은 구현됐지만 강제 실패 테스트 부족 | `statusCode = 207` 경로 테스트 추가 |
 | 자동화 수준 | 현재는 수동 Lambda 실행 방식 | 개발 안정화 후 S3 event 또는 CI/CD 검토 |
 
 ## 12. 결론
 
 한국 상세 Raw 데이터 40개 파일에 대한 전처리와 DynamoDB 적재를 완료했다. 데이터는 음식점, 관광지, 축제, 도시 메타데이터, 방문 통계로 분리되었고, `TourKoreaDomainData`에 총 4,334건이 적재되었다.
 
-이번 작업으로 강원도와 경상북도 시군 단위 상세 데이터를 서비스 조회 구조에 맞게 사용할 수 있는 기반이 마련되었다. 다음 단계에서는 전처리 전용 테스트 보강, README 운영 절차 정리, manifest 이력 관리, 실패 경로 검증을 진행하면 반복 가능한 수동 적재 라인으로 안정화할 수 있다.
+이번 작업으로 강원도와 경상북도 시군 단위 상세 데이터를 서비스 조회 구조에 맞게 사용할 수 있는 기반이 마련되었다. 또한 legacy `TourKoreaData` 제거, `TourKoreaDomainData` GSI 재구성, 전처리 전용 테스트, Lambda 부분 실패 경로 검증까지 완료되어 수동 적재 라인은 반복 실행 가능한 상태로 정리되었다. 다음 단계에서는 manifest 이력 관리와 자동 실행 방식(S3 event 또는 CI/CD)을 검토하면 된다.
